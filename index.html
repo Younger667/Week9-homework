@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obesity Rates in Australia</title>
-    
+   
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
 <body>
     <h1>Choropleth Map: Obesity Class I in Australian States</h1>
+  
     <div id="vis"></div>
 
     <script type="text/javascript">
+       
         const obesityData = [
           {"state": "New South Wales", "obesity_rate": 1064.4},
           {"state": "Victoria", "obesity_rate": 934.4},
@@ -25,6 +27,7 @@
           {"state": "Australian Capital Territory", "obesity_rate": 65.9}
         ];
 
+        
         const yourVlSpec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "description": "Choropleth Map of Obesity Class I (BMI 30.00–34.99) in Australian States",
@@ -65,6 +68,7 @@
           "projection": {"type": "equirectangular"}
         };
 
+       
         vegaEmbed('#vis', yourVlSpec).catch(console.warn);
     </script>
 </body>
