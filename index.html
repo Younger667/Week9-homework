@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obesity Rates Debug</title>
+    <title>Obesity Rates in Australia</title>
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
 <body>
-    <h1>Debugging Choropleth Map: Obesity Rates</h1>
+    <h1>Choropleth Map: Obesity Class I in Australian States</h1>
     <div id="vis"></div>
 
     <script type="text/javascript">
-       
+        // Define the obesity data
         const obesityData = [
           {"state": "New South Wales", "obesity_rate": 1064.4},
           {"state": "Victoria", "obesity_rate": 934.4},
@@ -25,11 +25,9 @@
           {"state": "Australian Capital Territory", "obesity_rate": 65.9}
         ];
 
-        console.log(obesityData);  
-
         const yourVlSpec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "description": "Debugging Choropleth Map for Obesity Rates",
+          "description": "A choropleth map showing Obesity rates in Australian states",
           "width": 800,
           "height": 500,
           "data": {
@@ -41,20 +39,20 @@
           },
           "transform": [
             {
-              "lookup": "properties.ADMIN",  
+              "lookup": "properties.ADMIN",  // Link to GeoJSON's ADMIN field
               "from": {
                 "data": {
-                  "values": obesityData  
+                  "values": obesityData  // Use the obesity data defined above
                 },
-                "key": "state",  
-                "fields": ["obesity_rate"]  
+                "key": "state",  // Match the state name
+                "fields": ["obesity_rate"]  // Obtain obesity rate
               }
             }
           ],
           "mark": "geoshape",
           "encoding": {
             "color": {
-              "field": "obesity_rate",  
+              "field": "obesity_rate",  // Color based on the obesity rate
               "type": "quantitative",
               "scale": {"scheme": "blues"}
             },
@@ -63,10 +61,10 @@
               {"field": "obesity_rate", "type": "quantitative", "title": "Obesity Rate"}
             ]
           },
-          "projection": {"type": "equirectangular"}  
+          "projection": {"type": "equirectangular"}
         };
 
-        vegaEmbed('#vis', yourVlSpec).catch(console.error);  
+        vegaEmbed('#vis', yourVlSpec).catch(console.error);
     </script>
 </body>
 </html>
