@@ -11,42 +11,60 @@
 </head>
 <body>
     <h1>Choropleth Map: Obesity Class I in Australian States</h1>
-   
     <div id="vis"></div>
 
     <script type="text/javascript">
-        
+        const obesityData = [
+          {"state": "New South Wales", "obesity_rate": 1064.4},
+          {"state": "Victoria", "obesity_rate": 934.4},
+          {"state": "Queensland", "obesity_rate": 847.1},
+          {"state": "South Australia", "obesity_rate": 285.5},
+          {"state": "Western Australia", "obesity_rate": 416.3},
+          {"state": "Tasmania", "obesity_rate": 94.8},
+          {"state": "Northern Territory", "obesity_rate": 27.9},
+          {"state": "Australian Capital Territory", "obesity_rate": 65.9}
+        ];
+
         const yourVlSpec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "description": "Choropleth Map of Obesity Class I (BMI 30.00–34.99) in Australian States",
           "data": {
-            "values": [
-              {"state": "NSW", "obesity_rate": 1064.4, "latitude": -31.2532, "longitude": 146.9211},
-              {"state": "Vic.", "obesity_rate": 934.4, "latitude": -37.4713, "longitude": 144.7852},
-              {"state": "Qld", "obesity_rate": 847.1, "latitude": -20.9176, "longitude": 142.7028},
-              {"state": "SA", "obesity_rate": 285.5, "latitude": -30.0002, "longitude": 136.2092},
-              {"state": "WA", "obesity_rate": 416.3, "latitude": -27.6728, "longitude": 121.6283},
-              {"state": "Tas.", "obesity_rate": 94.8, "latitude": -42.0409, "longitude": 146.8087},
-              {"state": "NT", "obesity_rate": 27.9, "latitude": -19.4914, "longitude": 132.5509},
-              {"state": "ACT", "obesity_rate": 65.9, "latitude": -35.4735, "longitude": 149.0124}
-            ]
+            "url": "https://raw.githubusercontent.com/your-username/your-repo/main/ne_110m_admin_0_countries.json",  
+            "format": {
+              "type": "json",
+              "property": "features"
+            }
           },
+          "transform": [
+            {
+              "lookup": "properties.ADMIN",  
+              "from": {
+                "data": {
+                  "values": obesityData  
+                },
+                "key": "state",
+                "fields": ["obesity_rate"]  
+              }
+            },
+            {
+              "filter": "datum.properties.ADMIN === 'Australia'"  
+            }
+          ],
           "mark": "geoshape",
           "encoding": {
             "color": {
-              "field": "obesity_rate",
+              "field": "obesity_rate",  
               "type": "quantitative",
               "scale": {"scheme": "blues"}
             },
             "tooltip": [
-              {"field": "state", "type": "nominal", "title": "State"},
+              {"field": "properties.ADMIN", "type": "nominal", "title": "State"},
               {"field": "obesity_rate", "type": "quantitative", "title": "Obesity Rate ('000)"}
             ]
           },
           "projection": {"type": "equirectangular"}
         };
 
-        
         vegaEmbed('#vis', yourVlSpec).catch(console.warn);
     </script>
 </body>
